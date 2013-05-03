@@ -1,0 +1,38 @@
+{
+  "name": "vkfill",
+  "title": "VKFill",
+  "version": "0.0.1",
+  "homepage": "http://nergal.github.io/vkfill",
+  "description": "Antispam script for VK.com",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nergal/vkfill.git"
+  },
+  "bugs": {
+    "url": "http://github.com/nergal/vkfill/issues"
+  },
+  "keywords": [
+    "vk",
+    "antispam",
+    "spam",
+    "js"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-qunit": "~0.1.2",
+    "grunt-contrib-watch": "~0.2.0",
+    "qunit": "~0.5.16",
+    "grunt-qunit-cov": "~0.3.2",
+    "jscoverage": "~0.3.6"
+  },
+  "author": {
+    "name": "nergal",
+    "email": "<me@2mio.com>"
+  },
+  "license": "MIT"
+}
