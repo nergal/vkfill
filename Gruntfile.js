@@ -5,6 +5,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
+    manifest: grunt.file.readJSON('src/manifest.json'),
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
@@ -78,6 +79,28 @@ module.exports = function(grunt) {
         reporter: 'Dot',
         run: true
       }
+    },
+    crx: {
+        staging: {
+            src: 'src/',
+            dest: "dist/staging/src/<%= pkg.name %>-<%= manifest.version %>-dev.crx",
+            baseUrl: 'http://2mio.com/vkfill/',
+            exclude: [ ".git", ".svn", "dev/**", "*.pem" ],
+            filename: "",
+            privateKey: "dist/key.pem",
+            options: {
+                maxBuffer: 3000 * 1024
+            }
+        },
+        production: {
+            src: 'src/',
+            dest: "dist/production/src/<%= pkg.name %>-<%= manifest.version %>-dev.crx",
+            baseUrl: 'http://2mio.com/vkfill/',
+            exclude: [ ".git", ".svn", "dev/**", "*.pem" ],
+            options: {
+                maxBuffer: 3000 * 1024
+            }
+        }
     }
   });
 
@@ -87,6 +110,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-crx');
 
   // Default task.
   grunt.registerTask('test', 'mocha');

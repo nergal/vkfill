@@ -1,0 +1,27 @@
+{
+    "name": "VK Fill",
+    "version": "0.0.1",
+    "description": "",
+    "default_locale": "ru",
+    "permissions": [
+        "http://vk.com/*",
+        "background",
+        "notifications",
+        "unlimitedStorage"
+    ],
+    "manifest_version": 2,
+    "page_action": {
+        "default_icon": "icons/icon19.png",
+        "default_title": "VK Fill",
+        "default_popup": "src/popup.html"
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "options_page": "options.html",
+    "background": {
+        "scripts": [ "background.js" ]
+    }
+}
