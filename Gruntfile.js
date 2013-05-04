@@ -62,12 +62,6 @@ module.exports = function(grunt) {
         src: ['src/**/*.js']
       }
     },
-    qunit: {
-      options: {
-        timeout: 10000
-      },
-      files: ['test/**/*.html']
-    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -75,16 +69,14 @@ module.exports = function(grunt) {
       },
       lib_test: {
         files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'qunit']
+        tasks: ['jshint:lib_test', 'mocha']
       }
     },
-    'qunit-cov': {
-      test: {
-        minimum: 0.99,
-        srcDir: 'src',
-        depDirs: ['src', 'test'],
-        outDir: 'output/coverage',
-        testFiles: ['test/index.html']
+    mocha: {
+      src: ['test/index.html'],
+      options: {
+        reporter: 'Dot',
+        run: true
       }
     }
   });
@@ -94,11 +86,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-  grunt.loadNpmTasks('grunt-qunit-cov');
+  grunt.loadNpmTasks('grunt-mocha');
 
   // Default task.
-  grunt.registerTask('coverage', 'qunit-cov');
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('test', 'mocha');
+  grunt.registerTask('default', ['jshint', 'mocha', 'concat', 'uglify']);
 
 };
