@@ -1,4 +1,4 @@
-/*! VKFill - v0.0.1 - 2013-05-02
+/*! VKFill - v0.0.1 - 2013-05-04
 * http://nergal.github.io/vkfill
 * Copyright (c) 2013 nergal; Licensed  */
 // javascript:void((function()%7Bvar e%3Ddocument.createElement(%27script%27)%3Be.setAttribute(%27type%27,%27text/javascript%27)%3Be.setAttribute(%27src%27,%27https://dl.dropboxusercontent.com/sh/lcbnbo5qipcg7ns/oPc5e5NP9O/vkfill.js%27)%3Bdocument.body.appendChild(e)%7D)())
@@ -10,33 +10,31 @@
 // @TODO convert in chrome extenstion
 // @TOOD add text representation for heuristic grade
 
-(function(d) {
-  "use strict";
-
+(function() {
   var DEBUG = true
 
-  var Heruistic = function(post) {
+  var Heuristic = function (post) {
     this.post = post
   }
 
-  Heruistic.prototype.calculate = function() {
+  Heuristic.prototype.calculate = function() {
     return 42
   }
 
-  Heruistic.prototype.getTextInfo = function() {
+  Heuristic.prototype.getTextInfo = function() {
     return 'some text'
   }
 
 
-  var struct = {}
+  var struct = {};
 
   /**
    * @class struct.link
    */
   struct.link = function(item) {
     this.url = null
-    if (!item) {
-      this.url = item.href
+    if (item) {
+      this.url = item.href || null
       this.is_external = (!!item.href.match('/away.php'))
       this.is_group = (item.getAttribute('mention_id') !== null)
       this.has_fake_continous = (item.getAttribute('class') === 'mem_link')
@@ -49,12 +47,12 @@
   struct.post = function(item) {
     this.id = null
 
-    if (item) {
+    if (item && item.id) {
       this._dom = item
 
       this.id = item.id
       var author = geByClass1('author', item)
-      this.poster_id = author.dataSet ? author.dataSet.fromId : null
+      this.poster_id = ((author && author.dataset) ? author.dataset.fromId : null)
       this.from_group = (parseInt(this.poster_id, 10) < 0)
       this.is_repost = (typeof geByClass1('published_by', item) !== 'undefined')
       this.links = this._fillLinks(item)
@@ -103,16 +101,20 @@
   }
 
   struct.post.prototype._fillImages = function(item) {
-    return geByClass1('page_post_sized_thumbs', item)
+    return geByClass('page_post_sized_thumbs', item)
+  }
+
+  struct.post.prototype.getHeuristic = function() {
+    return new Heuristic(this)
   }
 
   struct.post.prototype._debugText = function() {
-    var heur = new Heruistic(this)
+    var heur = this.getHeuristic()
     return heur.getTextInfo()
   }
 
   struct.post.prototype.getGrade = function() {
-    var heur = new Heruistic(this)
+    var heur = this.getHeuristic()
     return heur.calculate()
   }
 
@@ -162,9 +164,14 @@
   }
 
 
-  if (d.location.host === 'vk.com') {
+  if (document.location.host === 'vk.com') {
     var main = new VKFill()
     main.proceed(25)
+  } else {
+    window._test = {}
+    window._test.struct = struct;
+    window._test.VKFill = VKFill;
+    window._test.Heuristic = Heuristic;
   }
 
-})(document);
+})();

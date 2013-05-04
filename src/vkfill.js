@@ -44,12 +44,12 @@
   struct.post = function(item) {
     this.id = null
 
-    if (item) {
+    if (item && item.id) {
       this._dom = item
 
       this.id = item.id
       var author = geByClass1('author', item)
-      this.poster_id = author.dataSet ? author.dataSet.fromId : null
+      this.poster_id = ((author && author.dataset) ? author.dataset.fromId : null)
       this.from_group = (parseInt(this.poster_id, 10) < 0)
       this.is_repost = (typeof geByClass1('published_by', item) !== 'undefined')
       this.links = this._fillLinks(item)
@@ -164,11 +164,11 @@
   if (document.location.host === 'vk.com') {
     var main = new VKFill()
     main.proceed(25)
-  } else if (window.QUnit) {
-    window.test = {}
-    window.test.struct = struct;
-    window.test.VKFill = VKFill;
-    window.test.Heuristic = Heuristic;
+  } else {
+    window._test = {}
+    window._test.struct = struct;
+    window._test.VKFill = VKFill;
+    window._test.Heuristic = Heuristic;
   }
 
 })();
