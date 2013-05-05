@@ -4,7 +4,7 @@
     <title>Mocha</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="mocha.css" />
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
   </head>
   <body>
 <div id="result" style="display:none">
@@ -537,11 +537,15 @@
     <script type="text/javascript" src="http://st3.vk.me/js/al/common.js?1093_8"></script>
     <script type="text/javascript" src="../src/vkfill.js"></script>
     <script src="jquery.js"></script>
-    <script src="mocha.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../node_modules/expect.js/expect.js"></script>
     <script>mocha.setup('bdd')</script>
-    <script src="tests/posts.test.js"></script>
+
+    <script src="tests/images.test.js"></script>
+    <script src="tests/text.test.js"></script>
     <script src="tests/links.test.js"></script>
+    <script src="tests/posts.test.js"></script>
+    
     <script>
     $(function() {
       mocha.checkLeaks();

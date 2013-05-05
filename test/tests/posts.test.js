@@ -1,10 +1,14 @@
-describe('Posts', function() {
+describe('Посты', function() {
   describe('Общее тестирование', function() {
-      var html = $('#result #post-26406986_2375046').get(0)
-        , post = new _test.struct.post(html)
+      var html = $('#result #post-36731992_29369').get(0)
+        , post = new _test.struct.post(html, new _test.VKFill)
 
       it('должен возвращатся корректный id DOM элемента', function() {
-        expect(post.id).to.be.equal('post-26406986_2375046')
+        expect(post.id).to.be.equal('post-36731992_29369')
+      })
+
+      it('должен корректно указыватся родитель', function() {
+        expect(post._parent instanceof _test.VKFill).to.be.ok()
       })
 
       it('все ссылки в посте должны выделятся в отдельный объект', function() {
@@ -12,17 +16,43 @@ describe('Posts', function() {
       })
 
       it('ссылки поста должны иметь внутренний тип', function() {
-          for (var i = 0, len = post.links.length; i < len; i++) {
-              expect(post.links[i] instanceof _test.struct.link).to.be.ok()
-          }
+        for (var i = 0, len = post.links.length; i < len; i++) {
+          expect(post.links[i] instanceof _test.struct.link).to.be.ok()
+        }
+      })
+
+      it('должен корректно указыватся родитель ссылки', function() {
+        for (var i = 0, len = post.links.length; i < len; i++) {
+          expect(post.links[i]._parent instanceof _test.struct.post).to.be.ok()
+        }
+      })
+
+      it('тест должен иметь внутренний тип', function() {
+        expect(post.text instanceof _test.struct.text).to.be.ok()
+      })
+
+      it('должен корректно указыватся родитель текста', function() {
+        expect(post.text._parent instanceof _test.struct.post).to.be.ok()
+      })
+
+      it('все картинки в посте должны выделятся в отдельный объект', function() {
+        expect(post.images instanceof Array).to.be.ok()
+      })
+
+      it('картинки поста должны иметь внутренний тип', function() {
+        for (var i = 0, len = post.images.length; i < len; i++) {
+          expect(post.images[i] instanceof _test.struct.image).to.be.ok()
+        }
+      })
+
+      it('должен корректно указыватся родитель картинки', function() {
+        for (var i = 0, len = post.images.length; i < len; i++) {
+          expect(post.images[i]._parent instanceof _test.struct.post).to.be.ok()
+        }
       })
 
       it('для поста должен корректно разворачиватся объект эвристики', function() {
           expect(post.getHeuristic() instanceof _test.Heuristic).to.be.ok()
-      })
-
-      it('объект эвристики должен передавать в пост отладочное сообщение', function() {
-          expect(post._debugText()).to.be.a('string')
       })
 
       it('объект эвристики должен передавать в пост вес сообщения', function() {
@@ -149,7 +179,7 @@ describe('Posts', function() {
     })
   })
 
-  describe('Репост человеков пост', function() {
+  describe('Репост человеков', function() {
     var html = $('#result #post147767747_1090').get(0)
       , post = new _test.struct.post(html)
 

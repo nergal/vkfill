@@ -41,10 +41,9 @@ module.exports = function(grunt) {
         noarg: true,
         undef: true,
         unused: true,
-        // boss: true,
         browser: true,
         maxparams: 3,
-        maxdepth: 2,
+        maxdepth: 3,
         laxcomma: true,
         asi: true,
         globals: {
@@ -53,7 +52,11 @@ module.exports = function(grunt) {
             'geByClass1': true,
             'geByClass':  true,
             'setStyle':   true,
-            'ce':         true
+            'getStyle':   true,
+            'ce':         true,
+            'extend':     true,
+            'Feed':       true,
+            'console':    true
         }
       },
       gruntfile: {
@@ -101,6 +104,15 @@ module.exports = function(grunt) {
                 maxBuffer: 3000 * 1024
             }
         }
+    },
+    jsdoc: {
+      dist: {
+        src: ['src/**/*.js'],
+        options: {
+          /* export JAVA_HOME=`/usr/libexec/java_home -v 1.7` */
+          destination: 'docs'
+        }
+      }
     }
   });
 
@@ -111,6 +123,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-crx');
+  grunt.loadNpmTasks('grunt-jsdoc');
 
   // Default task.
   grunt.registerTask('test', 'mocha');
